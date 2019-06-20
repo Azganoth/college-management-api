@@ -4,6 +4,8 @@ import br.unisul.collegemanagement.address.Address;
 import br.unisul.collegemanagement.address.AddressRepository;
 import br.unisul.collegemanagement.city.City;
 import br.unisul.collegemanagement.city.CityRepository;
+import br.unisul.collegemanagement.course.Course;
+import br.unisul.collegemanagement.course.CourseRepository;
 import br.unisul.collegemanagement.instructor.Instructor;
 import br.unisul.collegemanagement.instructor.InstructorRepository;
 import br.unisul.collegemanagement.person.enums.PersonGender;
@@ -33,6 +35,7 @@ public class DevConfig {
     private final AddressRepository addressRepository;
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     /**
      * Sample data for testing.
@@ -91,6 +94,12 @@ public class DevConfig {
 
         studentRepository.saveAll(Arrays.asList(student1, student2, student3));
 
+        Course course1 = Course.builder().name("Programação em Python").build();
+        Course course2 = Course.builder().name("Treinamento Illidari").build();
+        Course course3 = Course.builder().name("Noções de Geometria").description("...").build();
+
+        courseRepository.saveAll(Arrays.asList(course1, course2, course3));
+
     }
 
     /**
@@ -117,6 +126,10 @@ public class DevConfig {
 
         for (Student student : studentRepository.findAll()) {
             log.info("Student Entity: {}", () -> student);
+        }
+
+        for (Course course : courseRepository.findAll()) {
+            log.info("Course Entity: {}", () -> course);
         }
 
     }
