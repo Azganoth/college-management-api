@@ -4,7 +4,6 @@ import br.unisul.collegemanagement.address.Address;
 import br.unisul.collegemanagement.person.enums.PersonGender;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ import java.util.Set;
  * Representa uma pessoa.
  */
 @Entity
-@Builder
+@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

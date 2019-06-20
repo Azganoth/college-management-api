@@ -4,11 +4,13 @@ import br.unisul.collegemanagement.address.Address;
 import br.unisul.collegemanagement.address.AddressRepository;
 import br.unisul.collegemanagement.city.City;
 import br.unisul.collegemanagement.city.CityRepository;
-import br.unisul.collegemanagement.person.Person;
-import br.unisul.collegemanagement.person.PersonRepository;
+import br.unisul.collegemanagement.instructor.Instructor;
+import br.unisul.collegemanagement.instructor.InstructorRepository;
 import br.unisul.collegemanagement.person.enums.PersonGender;
 import br.unisul.collegemanagement.state.State;
 import br.unisul.collegemanagement.state.StateRepository;
+import br.unisul.collegemanagement.student.Student;
+import br.unisul.collegemanagement.student.StudentRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +31,8 @@ public class DevConfig {
     private final StateRepository stateRepository;
     private final CityRepository cityRepository;
     private final AddressRepository addressRepository;
-    private final PersonRepository personRepository;
+    private final InstructorRepository instructorRepository;
+    private final StudentRepository studentRepository;
 
     /**
      * Sample data for testing.
@@ -58,20 +61,35 @@ public class DevConfig {
 
         addressRepository.saveAll(Arrays.asList(address1, address2, address3));
 
-        Person person1 = Person.builder().name("Ademir Ferreira").gender(PersonGender.MALE)
-                .birthDate(LocalDate.of(1999, 8, 23))
-                .email("ademirferreiracif@gmail.com").phones(Set.of("5511988888888"))
+        Instructor instructor1 = Instructor.instructorBuilder().name("Malfurion Stormrage")
+                .gender(PersonGender.UNDEFINED).birthDate(LocalDate.of(1999, 8, 23))
+                .email("malfurion.stormrage@gmail.com").phones(Set.of("5511988888888"))
                 .address(address1).build();
-        Person person2 = Person.builder().name("Angela Pentagast").gender(PersonGender.UNDEFINED)
-                .birthDate(LocalDate.of(1996, 3, 17))
-                .email("angela.pentagast@gmail.com").phones(Set.of("+55 (11) 98888-8888"))
+        Instructor instructor2 = Instructor.instructorBuilder().name("Tyrande Whisperwind")
+                .gender(PersonGender.FEMALE).birthDate(LocalDate.of(1996, 3, 17))
+                .email("tyrande.whisperwind@gmail.com").phones(Set.of("+55 (11) 98888-8888"))
                 .address(address2).build();
-        Person person3 = Person.builder().name("Leliana Fernandes").gender(PersonGender.FEMALE)
-                .birthDate(LocalDate.of(1990, 12, 30))
-                .email("leliana.fernandes@gmail.com").phones(Set.of("21 98888-8888"))
+        Instructor instructor3 = Instructor.instructorBuilder().name("Illidan Stormrage")
+                .gender(PersonGender.MALE).birthDate(LocalDate.of(1990, 12, 30))
+                .email("illidan.stormrage@gmail.com").phones(Set.of("21 98888-8888"))
                 .address(address3).build();
 
-        personRepository.saveAll(Arrays.asList(person1, person2, person3));
+        instructorRepository.saveAll(Arrays.asList(instructor1, instructor2, instructor3));
+
+        Student student1 = Student.studentBuilder().name("James Rob")
+                .gender(PersonGender.MALE).birthDate(LocalDate.of(1999, 8, 23))
+                .email("james.rob@gmail.com").phones(Set.of("0000123456789"))
+                .address(address1).build();
+        Student student2 = Student.studentBuilder().name("Jon Veles")
+                .gender(PersonGender.UNKNOW).birthDate(LocalDate.of(1996, 3, 17))
+                .email("jon.veles@gmail.com").phones(Set.of("+00 (00) 123456789"))
+                .address(address2).build();
+        Student student3 = Student.studentBuilder().name("Leliana Fernandes")
+                .gender(PersonGender.FEMALE).birthDate(LocalDate.of(1990, 12, 30))
+                .email("leliana.fernandes@gmail.com").phones(Set.of("00 12345-6789"))
+                .address(address3).build();
+
+        studentRepository.saveAll(Arrays.asList(student1, student2, student3));
 
     }
 
@@ -93,8 +111,12 @@ public class DevConfig {
             log.info("Address Entity: {}", () -> address);
         }
 
-        for (Person person : personRepository.findAll()) {
-            log.info("Person Entity: {}", () -> person);
+        for (Instructor instructor : instructorRepository.findAll()) {
+            log.info("Instructor Entity: {}", () -> instructor);
+        }
+
+        for (Student student : studentRepository.findAll()) {
+            log.info("Student Entity: {}", () -> student);
         }
 
     }
