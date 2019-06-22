@@ -2,6 +2,8 @@ package br.unisul.collegemanagement;
 
 import br.unisul.collegemanagement.address.Address;
 import br.unisul.collegemanagement.address.AddressRepository;
+import br.unisul.collegemanagement.certificate.Certificate;
+import br.unisul.collegemanagement.certificate.CertificateRepository;
 import br.unisul.collegemanagement.city.City;
 import br.unisul.collegemanagement.city.CityRepository;
 import br.unisul.collegemanagement.course.Course;
@@ -36,6 +38,7 @@ public class DevConfig {
     private final InstructorRepository instructorRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
+    private final CertificateRepository certificateRepository;
 
     /**
      * Sample data for testing.
@@ -100,6 +103,15 @@ public class DevConfig {
 
         courseRepository.saveAll(Arrays.asList(course1, course2, course3));
 
+        Certificate certificate1 = Certificate.builder()
+                .course(course1).instructor(instructor1).build();
+        Certificate certificate2 = Certificate.builder()
+                .course(course2).instructor(instructor2).build();
+        Certificate certificate3 = Certificate.builder()
+                .course(course3).instructor(instructor3).build();
+
+        certificateRepository.saveAll(Arrays.asList(certificate1, certificate2, certificate3));
+
     }
 
     /**
@@ -130,6 +142,10 @@ public class DevConfig {
 
         for (Course course : courseRepository.findAll()) {
             log.info("Course Entity: {}", () -> course);
+        }
+
+        for (Certificate certificate : certificateRepository.findAll()) {
+            log.info("Certificate Entity: {}", () -> certificate);
         }
 
     }
