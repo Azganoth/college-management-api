@@ -6,7 +6,7 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 /**
- * Realiza a conversão de uma gênero de uma pessoa para a sua representação na base de dados.
+ * Realiza a conversão de um gênero de uma pessoa para a sua representação na base de dados.
  */
 @Converter(autoApply = true)
 public class PersonGenderConverter implements AttributeConverter<PersonGender, String> {
@@ -24,7 +24,6 @@ public class PersonGenderConverter implements AttributeConverter<PersonGender, S
         if (genderName == null) {
             return null;
         }
-
         return PersonGender.of(genderName);
     }
 

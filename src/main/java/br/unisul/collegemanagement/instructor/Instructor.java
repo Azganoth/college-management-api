@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -27,16 +28,16 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Instructor extends Person {
 
-    @Builder(builderMethodName = "instructorBuilder")
-    protected Instructor(Long id, String name, PersonGender gender, LocalDate birthDate,
-                         String email, Set<String> phones, Address address) {
-        super(id, name, gender, birthDate, email, phones, address);
-    }
-
     /**
      * Os certificados que um instrutor possui.
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "instructor")
     @ToString.Exclude private Set<Certificate> certificates;
+
+    @Builder(builderMethodName = "instructorBuilder")
+    protected Instructor(Long id, String name, PersonGender gender, LocalDate birthDate,
+                         String email, @Singular Set<String> phones, Address address) {
+        super(id, name, gender, birthDate, email, phones, address);
+    }
 
 }

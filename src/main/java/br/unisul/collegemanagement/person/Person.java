@@ -11,8 +11,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
@@ -32,6 +30,9 @@ public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * A chave primária de uma pessoa.
+     */
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
@@ -45,7 +46,7 @@ public class Person implements Serializable {
     /**
      * O gênero de uma pessoa.
      */
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private PersonGender gender;
 
     /**
@@ -65,9 +66,8 @@ public class Person implements Serializable {
      */
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PHONE", foreignKey = @ForeignKey(name = "person_phone_fkey"))
-    @Column(name = "p_number", nullable = false, length = 20)
-    @NotEmpty // TODO: validation without javax constraints for elementcollections
-    private Set<@NotBlank String> phones;
+    @Column(name = "number", nullable = false, length = 20)
+    private Set<String> phones;
 
     /**
      * O endereço postal de uma pessoa.

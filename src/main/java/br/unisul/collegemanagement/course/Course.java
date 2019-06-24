@@ -35,18 +35,21 @@ public class Course implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * A chave primária de um curso.
+     */
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * O nome do curso.
+     * O nome de um curso.
      */
     @Column(unique = true, nullable = false)
     private String name;
 
     /**
-     * A descrição do curso.
+     * A descrição de um curso.
      */
     private String description;
 

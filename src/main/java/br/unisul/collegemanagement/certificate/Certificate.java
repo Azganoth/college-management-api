@@ -13,6 +13,7 @@ import lombok.ToString;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -20,8 +21,6 @@ import java.io.Serializable;
 
 /**
  * Representa um certificado.
- * (Um certificado representa o direito de um instrutor ({@link Instructor})
- * lecionar um curso ({@link Course}) para uma turma.)
  */
 @Entity
 @Builder
@@ -35,15 +34,19 @@ public class Certificate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * A chave composta de um certificado.
+     */
     @EmbeddedId
-    private CertificatePKey id;
+    @ToString.Exclude private CertificatePKey id;
 
     /**
      * O curso.
      */
     @ManyToOne
     @MapsId("course_id")
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", nullable = false,
+            foreignKey = @ForeignKey(name = "certificate_course_fkey"))
     private Course course;
 
     /**
@@ -51,27 +54,25 @@ public class Certificate implements Serializable {
      */
     @ManyToOne
     @MapsId("instructor_id")
-    @JoinColumn(name = "instructor_id")
+    @JoinColumn(name = "instructor_id", nullable = false,
+            foreignKey = @ForeignKey(name = "certificate_instructor_fkey"))
     private Instructor instructor;
 
-    // Override default builder to properly initialize the composite primary key.
     public static class CertificateBuilder {
-
-        CertificateBuilder() {
-            this.id = new CertificatePKey();
-        }
+        private CertificatePKey id = new CertificatePKey();
 
         public Certificate.CertificateBuilder course(Course course) {
             this.course = course;
-            this.id.setCourse(course.getId());
+            this.id.setCourseId(course.getId());
             return this;
         }
 
         public Certificate.CertificateBuilder instructor(Instructor instructor) {
             this.instructor = instructor;
-            this.id.setInstructor(instructor.getId());
+            this.id.setInstructorId(instructor.getId());
             return this;
         }
+
     }
 
 }

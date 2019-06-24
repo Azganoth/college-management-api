@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repositório de um curso ({@link Course}).
+ * O repositório responsável pela persistência de {@link Course}.
  */
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer> {

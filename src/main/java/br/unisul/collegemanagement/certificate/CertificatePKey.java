@@ -12,8 +12,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * Representa uma chave composta entre um curso ({@link br.unisul.collegemanagement.course.Course})
- * e um instrutor ({@link br.unisul.collegemanagement.instructor.Instructor}).
+ * A chave composta de {@link Certificate}.
+ * Uma combinação entre {@link br.unisul.collegemanagement.course.Course}
+ * e {@link br.unisul.collegemanagement.instructor.Instructor}.
  */
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,10 +26,16 @@ public class CertificatePKey implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * O identificador de um curso.
+     */
     @Column(name = "course_id")
-    private Integer course;
+    private Integer courseId;
 
+    /**
+     * O identificador de um instrutor.
+     */
     @Column(name = "instructor_id")
-    private Long instructor;
+    private Long instructorId;
 
 }

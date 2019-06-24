@@ -35,6 +35,9 @@ public class City implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * A chave primária de uma cidade.
+     */
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;

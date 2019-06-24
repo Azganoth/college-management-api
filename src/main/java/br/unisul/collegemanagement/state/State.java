@@ -1,6 +1,5 @@
 package br.unisul.collegemanagement.state;
 
-import br.unisul.collegemanagement.city.City;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,13 +11,10 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * Representa uma unidade federal.
@@ -35,6 +31,9 @@ public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * A chave primária de um estado.
+     */
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
@@ -42,7 +41,7 @@ public class State implements Serializable {
     /**
      * A abreviação de uma unidade federal.
      */
-    @Column(name = "abbr", unique = true, nullable = false, length = 2, updatable = false)
+    @Column(name = "abbr", unique = true, nullable = false, length = 2)
     private String abbreviation;
 
     /**
@@ -50,11 +49,5 @@ public class State implements Serializable {
      */
     @Column(unique = true, nullable = false)
     private String name;
-
-    /**
-     * As cidades contidas em uma unidade federal.
-     */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "state")
-    @ToString.Exclude private Set<City> cities;
 
 }

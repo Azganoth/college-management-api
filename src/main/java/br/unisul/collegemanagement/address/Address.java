@@ -1,7 +1,6 @@
 package br.unisul.collegemanagement.address;
 
 import br.unisul.collegemanagement.city.City;
-import br.unisul.collegemanagement.person.Person;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,12 +10,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
- * Representa de um endereço postal.
+ * Representa um endereço postal.
  */
 @Entity
 @Builder
@@ -30,6 +35,9 @@ public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * A chave primária de um endereço postal.
+     */
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
@@ -75,11 +83,5 @@ public class Address implements Serializable {
     private City city;
 
     // O estado está implícito em uma cidade.
-
-    /**
-     * As pessoas que residem em um endereço postal.
-     */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "address")
-    @ToString.Exclude private Set<Person> people;
 
 }
