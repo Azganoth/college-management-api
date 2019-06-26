@@ -6,8 +6,15 @@ import br.unisul.collegemanagement.certificate.Certificate;
 import br.unisul.collegemanagement.certificate.CertificateRepository;
 import br.unisul.collegemanagement.city.City;
 import br.unisul.collegemanagement.city.CityRepository;
+import br.unisul.collegemanagement.clazz.Clazz;
+import br.unisul.collegemanagement.clazz.ClazzRepository;
+import br.unisul.collegemanagement.clazz.enums.ClazzShift;
 import br.unisul.collegemanagement.course.Course;
 import br.unisul.collegemanagement.course.CourseRepository;
+import br.unisul.collegemanagement.enrollment.Enrollment;
+import br.unisul.collegemanagement.enrollment.EnrollmentRepository;
+import br.unisul.collegemanagement.exam.Exam;
+import br.unisul.collegemanagement.exam.ExamRepository;
 import br.unisul.collegemanagement.instructor.Instructor;
 import br.unisul.collegemanagement.instructor.InstructorRepository;
 import br.unisul.collegemanagement.person.enums.PersonGender;
@@ -22,8 +29,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.Arrays;
+import java.util.Objects;
 
 @Configuration
 @ConditionalOnProperty(prefix = "spring.jpa.hibernate", name = "ddl-auto", havingValue = "create")
@@ -38,6 +48,9 @@ public class DevConfig {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final CertificateRepository certificateRepository;
+    private final EnrollmentRepository enrollmentRepository;
+    private final ClazzRepository clazzRepository;
+    private final ExamRepository examRepository;
 
     /**
      * Sample data for testing purpuses.
@@ -187,6 +200,79 @@ public class DevConfig {
                 certificate4, certificate5));
         //endregion
 
+        //region classes
+        Clazz clazz1 = Clazz.builder().certificate(certificate1).day(DayOfWeek.MONDAY).semester(1)
+                .year(Year.of(2019)).shift(ClazzShift.NIGHT).capacity(25).build();
+        Clazz clazz2 = Clazz.builder().certificate(certificate2).day(DayOfWeek.THURSDAY).semester(1)
+                .year(Year.of(2019)).shift(ClazzShift.NIGHT).capacity(30).build();
+        Clazz clazz3 = Clazz.builder().certificate(certificate3).day(DayOfWeek.TUESDAY).semester(2)
+                .year(Year.of(2019)).shift(ClazzShift.AFTERNOON).capacity(30).build();
+        Clazz clazz4 = Clazz.builder().certificate(certificate4).day(DayOfWeek.FRIDAY).semester(1)
+                .year(Year.of(2019)).shift(ClazzShift.AFTERNOON).capacity(35).build();
+        Clazz clazz5 = Clazz.builder().certificate(certificate5).day(DayOfWeek.THURSDAY).semester(2)
+                .year(Year.of(2019)).shift(ClazzShift.MORNING).capacity(40).build();
+
+        clazzRepository.saveAll(Arrays.asList(clazz1, clazz2, clazz3, clazz4, clazz5));
+        //endregion
+
+        //region exams
+        Exam exam1 = Exam.builder().clazz(clazz1).day(LocalDate.of(2019, 4, 15)).build();
+        Exam exam2 = Exam.builder().clazz(clazz1).day(LocalDate.of(2019, 5, 23)).build();
+        Exam exam3 = Exam.builder().clazz(clazz2).day(LocalDate.of(2019, 5, 14)).build();
+        Exam exam4 = Exam.builder().clazz(clazz3).day(LocalDate.of(2019, 8, 13)).build();
+        Exam exam5 = Exam.builder().clazz(clazz3).day(LocalDate.of(2019, 9, 17)).build();
+        Exam exam6 = Exam.builder().clazz(clazz4).day(LocalDate.of(2019, 5, 24)).build();
+        Exam exam7 = Exam.builder().clazz(clazz5).day(LocalDate.of(2019, 8, 22)).build();
+        Exam exam8 = Exam.builder().clazz(clazz5).day(LocalDate.of(2019, 9, 26)).build();
+        Exam exam9 = Exam.builder().clazz(clazz5).day(LocalDate.of(2019, 10, 17)).build();
+
+        examRepository.saveAll(Arrays.asList(exam1, exam2, exam3, exam4, exam5, exam6, exam7, exam8,
+                exam9));
+        //endregion
+
+        //region enrollments
+        Enrollment enrollment1 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(1L).orElse(null)))
+                .student(student1).build();
+        Enrollment enrollment2 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(1L).orElse(null)))
+                .student(student2).build();
+        Enrollment enrollment3 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(1L).orElse(null)))
+                .student(student3).build();
+        Enrollment enrollment4 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(2L).orElse(null)))
+                .student(student1).build();
+        Enrollment enrollment5 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(2L).orElse(null)))
+                .student(student4).build();
+        Enrollment enrollment6 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(3L).orElse(null)))
+                .student(student3).build();
+        Enrollment enrollment7 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(3L).orElse(null)))
+                .student(student5).build();
+        Enrollment enrollment8 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(3L).orElse(null)))
+                .student(student6).build();
+        Enrollment enrollment9 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(4L).orElse(null)))
+                .student(student2).build();
+        Enrollment enrollment10 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(4L).orElse(null)))
+                .student(student3).build();
+        Enrollment enrollment11 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(4L).orElse(null)))
+                .student(student4).build();
+        Enrollment enrollment12 = Enrollment.builder().clazz(
+                Objects.requireNonNull(clazzRepository.findById(4L).orElse(null)))
+                .student(student5).build();
+
+        enrollmentRepository.saveAll(Arrays.asList(enrollment1, enrollment2, enrollment3,
+                enrollment4, enrollment5, enrollment6, enrollment7, enrollment8, enrollment9,
+                enrollment10, enrollment11, enrollment12));
+        //endregion
+
     }
 
     /**
@@ -221,6 +307,18 @@ public class DevConfig {
 
         for (Certificate certificate : certificateRepository.findAll()) {
             log.info(certificate);
+        }
+
+        for (Clazz clazz : clazzRepository.findAll()) {
+            log.info(clazz);
+        }
+
+        for (Exam exam : examRepository.findAll()) {
+            log.info(exam);
+        }
+
+        for (Enrollment enrollment : enrollmentRepository.findAll()) {
+            log.info(enrollment);
         }
 
     }
