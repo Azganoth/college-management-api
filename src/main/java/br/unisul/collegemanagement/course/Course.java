@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -45,6 +46,7 @@ public class Course implements Serializable {
     /**
      * O nome de um curso.
      */
+    @NotBlank
     @Column(unique = true, nullable = false)
     private String name;
 
@@ -54,7 +56,7 @@ public class Course implements Serializable {
     private String description;
 
     /**
-     * Os certificados que um curso contém.
+     * Os certificados que um curso possui.
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "course")
     @ToString.Exclude private Set<Certificate> certificates;

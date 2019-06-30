@@ -11,6 +11,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
@@ -40,38 +45,45 @@ public class Person implements Serializable {
     /**
      * O nome de uma pessoa.
      */
+    @NotBlank
     @Column(nullable = false)
     private String name;
 
     /**
      * O gênero de uma pessoa.
      */
+    @NotNull
     @Column(nullable = false, length = 30)
     private PersonGender gender;
 
     /**
      * A data de nascimento de uma pessoa.
      */
+    @NotNull
+    @Past
     @Column(nullable = false)
     private LocalDate birthDate;
 
     /**
      * O endereço de email de uma pessoa.
      */
+    @Email
     @Column(unique = true)
     private String email;
 
     /**
      * Os números de telefone de uma pessoa.
      */
+    @NotEmpty
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PHONE", foreignKey = @ForeignKey(name = "person_phone_fkey"))
-    @Column(name = "number", nullable = false, length = 20)
-    private Set<String> phones;
+    @Column(name = "number", nullable = false, length = 31)
+    private Set<@NotBlank String> phones;
 
     /**
      * O endereço postal de uma pessoa.
      */
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false,
             foreignKey = @ForeignKey(name = "person_address_fkey"))

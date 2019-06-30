@@ -17,6 +17,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -43,6 +44,7 @@ public class Grade implements Serializable {
     /**
      * O estudante.
      */
+    @NotNull
     @ManyToOne
     @MapsId("student_id")
     @JoinColumn(name = "student_id", nullable = false,
@@ -52,6 +54,7 @@ public class Grade implements Serializable {
     /**
      * A avaliaçao.
      */
+    @NotNull
     @ManyToOne
     @MapsId("exam_id")
     @JoinColumn(name = "exam_id", nullable = false,
@@ -59,7 +62,7 @@ public class Grade implements Serializable {
     private Exam exam;
 
     /**
-     * A valor de uma nota.
+     * A nota de uma avaliação.
      */
     private Double value;
 

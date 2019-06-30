@@ -17,6 +17,7 @@ import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -43,6 +44,7 @@ public class Enrollment implements Serializable {
     /**
      * A turma.
      */
+    @NotNull
     @ManyToOne
     @MapsId("class_id")
     @JoinColumn(name = "class_id", nullable = false,
@@ -52,6 +54,7 @@ public class Enrollment implements Serializable {
     /**
      * O estudante.
      */
+    @NotNull
     @ManyToOne
     @MapsId("student_id")
     @JoinColumn(name = "student_id", nullable = false,

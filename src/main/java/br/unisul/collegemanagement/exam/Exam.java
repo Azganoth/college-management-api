@@ -12,6 +12,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
@@ -41,26 +42,28 @@ public class Exam implements Serializable {
     /**
      * A turma da avaliação.
      */
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false,
             foreignKey = @ForeignKey(name = "exam_class_fkey"))
     private Clazz clazz;
 
     /**
-     * O data da avaliação.
+     * O tópico da avaliação.
      */
+    private String topic;
+
+    /**
+     * A data da avaliação.
+     */
+    @NotNull
     @Column(nullable = false)
     private LocalDate day;
 
     /**
-     * As matrículas que um estudante possui.
+     * As notas que uma avaliação possui.
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "exam")
     @ToString.Exclude private Set<Grade> grades;
-
-    /**
-     * O tópico da avaliação.
-     */
-    private String topic;
 
 }

@@ -14,6 +14,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.Year;
@@ -46,6 +49,7 @@ public class Clazz implements Serializable {
      * O certificado de uma turma.
      * O instrutor que irá lecionar e o curso que será lecionado.
      */
+    @NotNull
     @ManyToOne
     @JoinColumns(value = {
             @JoinColumn(name = "course_id", nullable = false),
@@ -61,35 +65,43 @@ public class Clazz implements Serializable {
     /**
      * O dia da semana de uma turma.
      */
+    @NotNull
     @Column(nullable = false)
     private DayOfWeek day;
 
     /**
      * O semestre de uma turma.
      */
+    @NotNull
+    @Positive
     @Column(nullable = false)
     private Integer semester;
 
     /**
      * O ano de uma turma.
      */
+    @NotNull
+    @FutureOrPresent
     @Column(nullable = false)
     private Year year;
 
     /**
      * O turno do dia de uma turma.
      */
+    @NotNull
     @Column(nullable = false, length = 30)
     private ClazzShift shift;
 
     /**
      * A capacidade de estudantes de uma turma.
      */
+    @NotNull
+    @Positive
     @Column(nullable = false)
     private Integer capacity;
 
     /**
-     * As matriculas que uma turma contém.
+     * As matriculas que uma turma possui.
      */
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "clazz")
     @ToString.Exclude private Set<Enrollment> enrollments;
