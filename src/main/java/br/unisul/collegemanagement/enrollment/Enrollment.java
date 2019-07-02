@@ -1,30 +1,30 @@
 package br.unisul.collegemanagement.enrollment;
 
-import br.unisul.collegemanagement.clazz.Clazz;
 import br.unisul.collegemanagement.student.Student;
+import br.unisul.collegemanagement.subject.Subject;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Representa uma matricula.
  */
 @Entity
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -42,40 +42,40 @@ public class Enrollment implements Serializable {
     @ToString.Exclude private EnrollmentPKey id;
 
     /**
-     * A turma.
+     * A disciplina.
      */
-    @NotNull
     @ManyToOne
-    @MapsId("class_id")
-    @JoinColumn(name = "class_id", nullable = false,
-            foreignKey = @ForeignKey(name = "enrollment_class_fkey"))
-    private Clazz clazz;
+    @MapsId("subject_id")
+    @JoinColumn(name = "subject_id", nullable = false,
+            foreignKey = @ForeignKey(name = "enrollment_subject_fkey"))
+    @NotNull private Subject subject;
 
     /**
      * O estudante.
      */
-    @NotNull
     @ManyToOne
     @MapsId("student_id")
     @JoinColumn(name = "student_id", nullable = false,
             foreignKey = @ForeignKey(name = "enrollment_student_fkey"))
-    private Student student;
+    @NotNull private Student student;
 
-    public static class EnrollmentBuilder {
-        private EnrollmentPKey id = new EnrollmentPKey();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "GRADE", foreignKey = @ForeignKey(name = "enrollment_grade_fkey"))
+    @Column(name = "value", nullable = false)
+    @NotEmpty @Size(min = 3, max = 3)
+    private List<@NotNull @DecimalMin("0.0") @DecimalMax("10.0") BigDecimal> grades;
 
-        public EnrollmentBuilder clazz(Clazz clazz) {
-            this.clazz = clazz;
-            this.id.setClazzId(clazz.getId());
-            return this;
-        }
+    public Enrollment(Subject subject, Student student) {
+        this.id = new EnrollmentPKey();
+        this.subject = subject;
+        this.id.setSubjectId(subject.getId());
+        this.student = student;
+        this.id.setStudentId(student.getId());
+        this.initializeGrades();
+    }
 
-        public EnrollmentBuilder student(Student student) {
-            this.student = student;
-            this.id.setStudentId(student.getId());
-            return this;
-        }
-
+    public void initializeGrades() {
+        this.grades = Arrays.asList(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
     }
 
 }

@@ -25,10 +25,10 @@ public class EnrollmentPKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * O identificador de uma turma.
+     * O identificador de uma disciplina.
      */
-    @Column(name = "class_id", nullable = false)
-    private Long clazzId;
+    @Column(name = "subject_id", nullable = false)
+    private Integer subjectId;
 
     /**
      * O identificador de um estudante.
