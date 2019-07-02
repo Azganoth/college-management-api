@@ -42,16 +42,13 @@ public class State implements Serializable {
     /**
      * A abreviação de uma unidade federal.
      */
-    @NotBlank
-    @Size(min = 2, max = 2)
     @Column(name = "abbr", unique = true, nullable = false, length = 2)
-    private String abbreviation;
+    @NotBlank @Size(min = 2, max = 2) private String abbreviation;
 
     /**
      * O nome de uma unidade federal.
      */
-    @NotBlank
     @Column(unique = true, nullable = false)
-    private String name;
+    @NotBlank private String name;
 
 }

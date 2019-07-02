@@ -48,9 +48,8 @@ public class Address implements Serializable {
     /**
      * O nome do logradouro de um endereço postal.
      */
-    @NotBlank
     @Column(nullable = false)
-    private String street;
+    @NotBlank private String street;
 
     /**
      * O número/identificador da residência de um endereço postal. (Pode conter letras.)
@@ -75,19 +74,16 @@ public class Address implements Serializable {
     /**
      * O código postal de um endereço postal.
      */
-    @NotBlank
-    @Size(min = 2, max = 12)
     @Column(nullable = false, length = 12)
-    private String postalCode;
+    @NotBlank @Size(min = 2, max = 12) private String postalCode;
 
     /**
      * A cidade em que um endereço postal reside.
      */
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false,
             foreignKey = @ForeignKey(name = "address_city_fkey"))
-    private City city;
+    @NotNull private City city;
 
     // O estado está implícito em uma cidade.
 

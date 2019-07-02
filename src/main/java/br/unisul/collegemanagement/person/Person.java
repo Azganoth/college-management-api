@@ -45,48 +45,41 @@ public class Person implements Serializable {
     /**
      * O nome de uma pessoa.
      */
-    @NotBlank
     @Column(nullable = false)
-    private String name;
+    @NotBlank private String name;
 
     /**
      * O gênero de uma pessoa.
      */
-    @NotNull
     @Column(nullable = false, length = 30)
-    private PersonGender gender;
+    @NotNull private PersonGender gender;
 
     /**
      * A data de nascimento de uma pessoa.
      */
-    @NotNull
-    @Past
     @Column(nullable = false)
-    private LocalDate birthDate;
+    @NotNull @Past private LocalDate birthDate;
 
     /**
      * O endereço de email de uma pessoa.
      */
-    @Email
     @Column(unique = true)
-    private String email;
+    @Email private String email;
 
     /**
      * Os números de telefone de uma pessoa.
      */
-    @NotEmpty
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PHONE", foreignKey = @ForeignKey(name = "person_phone_fkey"))
-    @Column(name = "number", nullable = false, length = 31)
-    private Set<@NotBlank String> phones;
+    @Column(name = "number", nullable = false, length = 19)
+    @NotEmpty private Set<@NotBlank String> phones;
 
     /**
      * O endereço postal de uma pessoa.
      */
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "address_id", nullable = false,
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JoinColumn(name = "address_id", unique = true, nullable = false,
             foreignKey = @ForeignKey(name = "person_address_fkey"))
-    private Address address;
+    @NotNull private Address address;
 
 }

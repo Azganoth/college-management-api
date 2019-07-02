@@ -46,17 +46,15 @@ public class City implements Serializable {
     /**
      * O nome de uma cidade.
      */
-    @NotBlank
     @Column(nullable = false)
-    private String name;
+    @NotBlank private String name;
 
     /**
      * O estado em que uma cidade reside.
      */
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "state_id", nullable = false,
             foreignKey = @ForeignKey(name = "city_state_fkey"))
-    private State state;
+    @NotNull private State state;
 
 }

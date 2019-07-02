@@ -4,6 +4,7 @@ import br.unisul.collegemanagement.address.Address;
 import br.unisul.collegemanagement.enrollment.Enrollment;
 import br.unisul.collegemanagement.person.Person;
 import br.unisul.collegemanagement.person.enums.PersonGender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,15 +29,12 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Student extends Person {
 
-    /**
-     * As matrículas que um estudante possui.
-     */
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student")
-    @ToString.Exclude private Set<Enrollment> enrollments;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "student", orphanRemoval = true)
+    @JsonIgnore private Set<Enrollment> enrollments;
 
     @Builder(builderMethodName = "studentBuilder")
-    protected Student(Long id, String name, PersonGender gender, LocalDate birthDate, String email,
-                      @Singular Set<String> phones, Address address) {
+    protected Student(Long id, String name, PersonGender gender, LocalDate birthDate,
+                      String email, @Singular Set<String> phones, Address address) {
         super(id, name, gender, birthDate, email, phones, address);
     }
 
