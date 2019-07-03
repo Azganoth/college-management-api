@@ -4,9 +4,9 @@ import br.unisul.collegemanagement.address.Address;
 import br.unisul.collegemanagement.city.CityRepository;
 import br.unisul.collegemanagement.enrollment.Enrollment;
 import br.unisul.collegemanagement.enrollment.EnrollmentRepository;
+import br.unisul.collegemanagement.person.enums.PersonGender;
 import br.unisul.collegemanagement.professor.Professor;
 import br.unisul.collegemanagement.professor.ProfessorRepository;
-import br.unisul.collegemanagement.person.enums.PersonGender;
 import br.unisul.collegemanagement.student.Student;
 import br.unisul.collegemanagement.student.StudentRepository;
 import br.unisul.collegemanagement.subject.Subject;
@@ -18,9 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.Arrays;
 
 @Configuration
@@ -107,15 +105,11 @@ public class DevConfig {
 
         Subject subject1 = Subject.builder()
                 .name("Matemática")
-                .day(DayOfWeek.MONDAY)
-                .year(Year.of(2019))
                 .professor(professor1)
                 .build();
 
         Subject subject2 = Subject.builder()
                 .name("Português")
-                .day(DayOfWeek.WEDNESDAY)
-                .year(Year.of(2019))
                 .professor(professor2)
                 .build();
 

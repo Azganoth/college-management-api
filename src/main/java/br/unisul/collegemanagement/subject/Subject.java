@@ -13,12 +13,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.DayOfWeek;
-import java.time.Year;
 import java.util.Set;
 
 /**
@@ -53,18 +50,6 @@ public class Subject implements Serializable {
      * A descrição de uma disciplina.
      */
     private String description;
-
-    /**
-     * O dia da semana de uma disciplina.
-     */
-    @Column(nullable = false)
-    @NotNull private DayOfWeek day;
-
-    /**
-     * O ano de uma disciplina.
-     */
-    @Column(nullable = false)
-    @NotNull @FutureOrPresent private Year year;
 
     /**
      * O professor que leciona essa disciplina.
