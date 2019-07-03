@@ -25,20 +25,6 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
-    public List<Subject> retrieveAllByProfessorId(Long id) {
-        return subjectRepository.findAllByProfessor_Id(id);
-    }
-
-    public void updateById(Subject subject, Integer id) {
-        if (!subjectRepository.existsById(id)) {
-            throw new IllegalArgumentException(
-                    String.format("There's not a single fuckin one subject with the id: %d.", id));
-        }
-
-        subject.setId(id);
-        subjectRepository.save(subject);
-    }
-
     public void deleteById(Integer id) {
         subjectRepository.deleteById(id);
     }

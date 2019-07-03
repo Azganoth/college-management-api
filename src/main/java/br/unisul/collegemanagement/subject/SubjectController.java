@@ -48,13 +48,6 @@ public class SubjectController {
         return ResponseEntity.ok(enrollmentService.findAllBySubjectId(id));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> putSubject(@Validated @RequestBody Subject subject,
-                                          @PathVariable Integer id) {
-        subjectService.updateById(subject, id);
-        return ResponseEntity.noContent().build();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteSubject(@PathVariable Integer id) {
         subjectService.deleteById(id);

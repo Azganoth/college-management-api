@@ -1,6 +1,5 @@
 package br.unisul.collegemanagement.student;
 
-import br.unisul.collegemanagement.enrollment.Enrollment;
 import br.unisul.collegemanagement.enrollment.EnrollmentService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -41,11 +40,6 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Student>> getStudents() {
         return ResponseEntity.ok(studentService.retrieveAll());
-    }
-
-    @RequestMapping(value = "/{id}/enrollments", method = RequestMethod.GET)
-    public ResponseEntity<List<Enrollment>> getEnrollments(@PathVariable Long id) {
-        return ResponseEntity.ok(enrollmentService.findAllByStudentId(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

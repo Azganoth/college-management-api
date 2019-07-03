@@ -12,11 +12,6 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
 
-    public Address create(Address address) {
-        address.setId(null);
-        return addressRepository.save(address);
-    }
-
     public Address retrieveById(Long id) {
         return addressRepository.findById(id).orElse(null);
     }

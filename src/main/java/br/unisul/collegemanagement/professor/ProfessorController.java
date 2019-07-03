@@ -1,7 +1,5 @@
 package br.unisul.collegemanagement.professor;
 
-import br.unisul.collegemanagement.subject.Subject;
-import br.unisul.collegemanagement.subject.SubjectService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,6 @@ import java.util.List;
 public class ProfessorController {
 
     private final ProfessorService professorService;
-    private final SubjectService subjectService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> postInstructor(@Validated @RequestBody Professor professor) {
@@ -41,11 +38,6 @@ public class ProfessorController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Professor>> getInstructors() {
         return ResponseEntity.ok(professorService.retrieveAll());
-    }
-
-    @RequestMapping(value = "/{id}/subjects", method = RequestMethod.GET)
-    public ResponseEntity<List<Subject>> getSubjects(@PathVariable Long id) {
-        return ResponseEntity.ok(subjectService.retrieveAllByProfessorId(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

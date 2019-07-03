@@ -13,7 +13,5 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Enrollme
 
     List<Enrollment> findAllBySubject_Id(Integer id);
 
-    List<Enrollment> findAllByStudent_Id(Long id);
-
 }
 
