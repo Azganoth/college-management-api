@@ -16,7 +16,7 @@ import java.io.Serializable;
  */
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode

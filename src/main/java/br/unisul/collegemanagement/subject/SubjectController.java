@@ -2,7 +2,6 @@ package br.unisul.collegemanagement.subject;
 
 import br.unisul.collegemanagement.enrollment.Enrollment;
 import br.unisul.collegemanagement.enrollment.EnrollmentService;
-import br.unisul.collegemanagement.student.Student;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +33,6 @@ public class SubjectController {
         ).build();
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public ResponseEntity<Void> postEnrollment(@Validated @RequestBody Student student,
-                                               @PathVariable Integer id) {
-        Subject subject = subjectService.retrieveById(id);
-        enrollmentService.create(new Enrollment(subject, student));
-        return ResponseEntity.noContent().build();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Subject> getSubject(@PathVariable Integer id) {
         return ResponseEntity.ok(subjectService.retrieveById(id));
@@ -67,6 +58,13 @@ public class SubjectController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> deleteSubject(@PathVariable Integer id) {
         subjectService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{subjectId}/{studentId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> deleteEnrollment(@PathVariable Integer subjectId,
+                                                 @PathVariable Long studentId) {
+        enrollmentService.deleteById(subjectId, studentId);
         return ResponseEntity.noContent().build();
     }
 

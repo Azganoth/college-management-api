@@ -24,4 +24,8 @@ public class EnrollmentService {
         return enrollmentRepository.findAllByStudent_Id(id);
     }
 
+    public void deleteById(Integer subjectId, Long studentId) {
+        enrollmentRepository.deleteById(new EnrollmentPKey(subjectId, studentId));
+    }
+
 }
