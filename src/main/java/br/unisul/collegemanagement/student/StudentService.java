@@ -32,6 +32,7 @@ public class StudentService {
         }
 
         student.setId(id);
+        student.setEnrollments(studentRepository.getOne(id).getEnrollments());
         return studentRepository.save(student);
     }
 

@@ -50,7 +50,7 @@ public class StudentController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Void> putStudent(@Validated @RequestBody Student student,
-                                          @PathVariable Long id) {
+                                           @PathVariable Long id) {
         studentService.updateById(student, id);
         return ResponseEntity.noContent().build();
     }
