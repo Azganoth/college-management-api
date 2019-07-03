@@ -75,7 +75,12 @@ public class Enrollment implements Serializable {
     }
 
     public void initializeGrades() {
-        this.grades = Arrays.asList(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+        this.grades = Arrays.asList(random(), random(), random());
+    }
+
+    private BigDecimal random() {
+        BigDecimal max = new BigDecimal("10.0");
+        return BigDecimal.ZERO.add(max.multiply(new BigDecimal(Math.random())));
     }
 
 }
