@@ -18,8 +18,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Representa uma matricula.
@@ -79,8 +81,8 @@ public class Enrollment implements Serializable {
     }
 
     private BigDecimal random() {
-        BigDecimal max = new BigDecimal("10.0");
-        return BigDecimal.ZERO.add(max.multiply(new BigDecimal(Math.random())));
+        Random random = new Random();
+        return BigDecimal.valueOf(random.nextInt(100) / 10.0).setScale(2, RoundingMode.HALF_UP);
     }
 
 }
